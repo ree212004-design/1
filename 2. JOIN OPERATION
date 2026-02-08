@@ -1,0 +1,154 @@
+JOIN OPERATION
+
+PROGRAM 
+1) CREATE TABLE 
+ 
+CREATE TABLE department_info ( 
+EMP_ID NUMBER(5), 
+DEPARTMENT VARCHAR2(20), 
+LOCATION VARCHAR2(20) 
+); 
+INSERT INTO department_info VALUES (101, 'HR', 'Chennai'); 
+INSERT INTO department_info VALUES (102, 'Finance', 'Bangalore'); 
+INSERT INTO department_info VALUES (105, 'IT', 'Hyderabad'); 
+ 
+SQL> SELECT * FROM department_info; 
+ 
+EMP_ID DEPARTMENT LOCATION 
+ 
+101 HR Chennai 
+102 Finance Bangalore 
+105 IT Hyderabad 
+ 
+ 
+2) IMPLEMENTATION OF SELF JOIN OPERATION 
+ 
+SQL> SELECT e1.emp_id, e1.emp_name, e1.joining_date 
+2 FROM employee_info e1 
+3 JOIN employee_info e2 
+4 ON e1.emp_id = e2.emp_id; 
+ 
+EMP_ID EMP_NAME JOINING_D 
+ 
+101 Anitha 10-JAN-23 
+102 Bharathi 15-MAR-23 
+103 Chandru 20-MAY-23 
+9  
+104 Deepak 25-JUL-23 
+ 
+ 
+3) IMPLEMENTATION OF INNER JOIN OPERATION 
+ 
+SQL> SELECT e.emp_id, e.emp_name, e.joining_date, d.department, d.location 
+2 FROM employee_info e 
+3 INNER JOIN department_info d 
+4 ON e.emp_id = d.emp_id; 
+ 
+EMP_ID EMP_NAME JOINING_D DEPARTMENT 
+ 
+LOCATION 
+ 
+101 Anitha 10-JAN-23 HR 
+Chennai 
+ 
+102 Bharathi 15-MAR-23 Finance 
+Bangalore 
+ 
+4) IMPLEMENTATION OF LEFT OPERATION 
+ 
+SQL> SELECT e.emp_id, e.emp_name, e.joining_date, d.department, d.location 
+2 FROM employee_info e 
+3 LEFT JOIN department_info d 
+4 ON e.emp_id = d.emp_id; 
+ 
+EMP_ID EMP_NAME JOINING_D DEPARTMENT 
+ 
+LOCATION 
+ 
+101 Anitha 10-JAN-23 HR 
+Chennai 
+ 
+102 Bharathi 15-MAR-23 Finance 
+10  
+Bangalore 
+ 
+104 Deepak 25-JUL-23 
+ 
+ 
+ 
+ 
+ 
+EMP_ID EMP_NAME JOINING_D DEPARTMENT 
+ 
+LOCATION 
+ 
+103 Chandru 20-MAY-23 
+ 
+ 
+5) IMPLEMENTATION OF RIGHT JOIN OPERATION 
+ 
+SQL> SELECT e.emp_id, e.emp_name, e.joining_date, d.department, d.location 
+2 FROM employee_info e 
+3 RIGHT JOIN department_info d 
+4 ON e.emp_id = d.emp_id; 
+EMP_ID EMP_NAME JOINING_D DEPARTMENT 
+LOCATION 
+ 
+101 Anitha 10-JAN-23 HR 
+Chennai 
+ 
+ 
+102 Bharathi 15-MAR-23 Finance 
+Bangalore 
+ 
+IT 
+Hyderabad 
+ 
+ 
+6) IMPLEMENTATION OF FULL OUTER JOIN OPERATION 
+11  
+SQL> SELECT e.emp_id, e.emp_name, e.joining_date, d.department, d.location 
+2 FROM employee_info e 
+3 FULL OUTER JOIN department_info d 
+4 ON e.emp_id = d.emp_id; 
+ 
+EMP_ID EMP_NAME JOINING_D DEPARTMENT 
+ 
+LOCATION 
+ 
+101 Anitha 10-JAN-23 HR 
+Chennai 
+ 
+ 
+102 Bharathi 15-MAR-23 Finance 
+Bangalore 
+ 
+103 Chandru 20-MAY-23 
+ 
+ 
+EMP_ID EMP_NAME JOINING_D DEPARTMENT 
+LOCATION 
+ 
+104 Deepak 25-JUL-23 
+ 
+ 
+ 
+IT 
+Hyderabad 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
