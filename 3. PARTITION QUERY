@@ -1,0 +1,209 @@
+PARTITION QUERY
+
+PROGRAM 
+ 
+1) TO IMPLEMENT RANGE PARTITIONING 
+ 
+SQL> CREATE TABLE salesdata ( 
+sid NUMBER, 
+sname VARCHAR2(100), 
+sales_amount NUMBER(12,2), 
+sales_date DATE 
+) 
+PARTITION BY RANGE (sales_date) 
+( 
+PARTITION sales_jan VALUES LESS THAN (DATE '2025-02-01'), 
+PARTITION sales_feb VALUES LESS THAN (DATE '2025-03-01'), 
+PARTITION sales_mar VALUES LESS THAN (DATE '2025-04-01'), 
+PARTITION sales_other VALUES LESS THAN (DATE '2100-01-01') 
+); 
+Table created. 
+ 
+ 
+SQL> INSERT INTO salesdata VALUES (1, 'A', 5000, DATE '2025-01-10'); 
+1 row created. 
+ 
+SQL> INSERT INTO salesdata VALUES (2, 'B', 6500, DATE '2025-02-15'); 
+1 row created. 
+ 
+SQL> INSERT INTO salesdata VALUES (3, 'C', 7200, DATE '2025-10-08'); 
+1 row created. 
+SQL> SELECT * FROM salesdata PARTITION (sales_jan); 
+SID 
+ 
+SNAME 
+ 
+15  
+SALES_AMOUNT SALES_DAT 
+ 
+1 
+A 
+5000 10-JAN-25 
+ 
+SQL> SELECT * FROM salesdata PARTITION (sales_feb); 
+SID 
+ 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+2 
+B 
+6500 15-FEB-25 
+ 
+ 
+ 
+SQL> SELECT * FROM salesdata PARTITION (sales_mar); 
+no rows selected 
+ 
+SQL> SELECT * FROM salesdata PARTITION (sales_other); 
+SID 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+3 
+C 
+7200 08-OCT-25 
+16  
+2) TO IMPLEMENT LIST PARTITIONING 
+SQL> CREATE TABLE sales_records ( 
+sid NUMBER, 
+sname VARCHAR2(100), 
+sales_amount NUMBER(12,2), 
+sales_date DATE 
+) 
+PARTITION BY LIST (sid) 
+( 
+PARTITION sid_1_to_3 VALUES (1,2,3), 
+PARTITION sid_4_to_6 VALUES (4,5,6), 
+PARTITION sid_other VALUES (DEFAULT) 
+); 
+Table created. 
+ 
+ 
+SQL> INSERT INTO sales_records VALUES (1, 'John', 5000, DATE '2025-01-15'); 
+1 row created. 
+ 
+ 
+SQL> INSERT INTO sales_records VALUES (2, 'Mary', 6200, DATE '2025-02-20'); 
+1 row created. 
+ 
+SQL> INSERT INTO sales_records VALUES (4, 'Anu', 8000, DATE '2025-07-10'); 
+1 row created. 
+ 
+SQL> SELECT * FROM sales_records WHERE sid BETWEEN 1 AND 3 ORDER BY sid; 
+SID 
+SNAME 
+SALES_AMOUNT SALES_DAT 
+1 
+17  
+John 
+5000 15-JAN-25 
+ 
+ 
+2 
+Mary 
+6200 20-FEB-25 
+SID 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+ 
+SQL> SELECT * FROM sales_records WHERE sid BETWEEN 4 AND 6 ORDER BY sid; 
+SID 
+ 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+ 
+ 
+Anu 
+4 
+ 
+8000 10-JUL-25 
+ 
+ 
+ 
+SQL> SELECT * FROM sales_records WHERE sid NOT BETWEEN 1 AND 6 ORDER BY 
+sid; 
+no rows selected 
+ 
+ 
+3) TO IMPLEMENT HASH PARTITIONING 
+18  
+SQL> CREATE TABLE sales_hash ( 
+2 sid NUMBER, 
+3 sname VARCHAR2(100), 
+4 sales_amount NUMBER(12,2), 
+5 sales_date DATE 
+6 ) 
+7 PARTITION BY HASH (sid) 
+8 PARTITIONS 4; 
+ 
+Table created. 
+ 
+ 
+SQL> INSERT INTO sales_hash VALUES (1, 'John', 5000, DATE '2025-01-15'); 
+1 row created. 
+ 
+SQL> INSERT INTO sales_hash VALUES (2, 'Mary', 6200, DATE '2025-02-20'); 
+1 row created. 
+ 
+SQL> INSERT INTO sales_hash VALUES (3, 'Sam', 7100, DATE '2025-03-25'); 
+1 row created. 
+SQL> SELECT * FROM sales_hash ORDER BY sid; 
+SID 
+ 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+ 
+ 
+John 
+1 
+ 
+5000 15-JAN-25 
+ 
+ 
+2 
+Mary 
+19  
+6200 20-FEB-25 
+SID 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+ 
+ 
+ 
+Sam 
+3 
+ 
+ 
+7100 25-MAR-25 
+ 
+ 
+ 
+SQL> SELECT * FROM sales_hash WHERE sid = 3; 
+SID 
+SNAME 
+ 
+SALES_AMOUNT SALES_DAT 
+ 
+ 
+ 
+Sam 
+3 
+ 
+ 
+7100 25-MAR-25 
+
+ 
+ 
+ 
+ 
