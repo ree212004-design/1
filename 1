@@ -1,0 +1,135 @@
+IMPLEMENTATION CONSTRAINTS 
+
+PROGRAM 
+ 
+1) IMPLEMENTATION OF PRIMARY KEY, CHECK, UNIQUE AND NULL 
+CONSTRAINTS 
+ 
+SQL> CREATE TABLE Emp30 ( 
+2 emp_id INT NOT NULL PRIMARY KEY, 
+3 Name VARCHAR(10) NOT NULL, 
+4 Age INT CHECK (Age >= 18), 
+5 Email_id VARCHAR(50) UNIQUE, 
+6 Phone INT NULL 
+7 ); 
+ 
+Table created. 
+ 
+2) IMPLEMENTATION OF FOREIGN KEY CONSTRAINT 
+ 
+SQL> CREATE TABLE empaddress ( 
+2 emp_id INT, 
+3 city VARCHAR(30), 
+4 FOREIGN KEY (emp_id) REFERENCES Emp30(emp_id) 
+5 ); 
+ 
+Table created. 
+ 
+3) INSERTION OPERATION 
+ 
+SQL> INSERT INTO Emp30 VALUES (101, 'Divya', 26, 'divya3123@gmail.com', 
+9723463728); 
+ 
+1 row created. 
+ 
+SQL> INSERT INTO Emp30 VALUES (102, 'Revathi', 23, 'revathi54@gmail.com', 
+8436737078); 
+ 
+1 row created. 
+ 
+SQL> INSERT INTO Emp30 VALUES (103, 'Malini', 24, 'malini@gmail.com', 
+6795327095); 
+ 
+1 row created. 
+ 
+SQL> INSERT INTO Emp30 VALUES (104, 'Varshini', 22, 'varshini@gmail.com', 
+9998887776); 
+3  
+1 row created. 
+ 
+SQL> INSERT INTO empaddress VALUES (101, 'Dindigul'); 
+1 row created. 
+
+SQL> INSERT INTO empaddress VALUES (102, 'Trichy'); 
+1 row created. 
+
+SQL> INSERT INTO empaddress VALUES (103, 'Karur'); 
+1 row created. 
+
+SQL> INSERT INTO empaddress VALUES (104, 'Namakkal'); 
+1 row created. 
+
+4) DISPLAYING THE TABLES 
+SQL> SELECT * FROM Emp30; 
+EMP_ID NAME AGE 
+ 
+EMAIL_ID PHONE 
+101 Divya 26 
+divya3123@gmail.com 9723463728 
+102 Revathi 23 
+revathi54@gmail.com 8436737078 
+103 Malini 24 
+malini@gmail.com 6795327095 
+EMP_ID NAME AGE 
+EMAIL_ID PHONE 
+104 Varshini 22 
+varshini@gmail.com 9998887776 
+4  
+SQL> SELECT * FROM empaddress; 
+ 
+EMP_ID CITY 
+ 
+101 Dindigul 
+102 Trichy 
+103 Karur 
+104 Namakkal 
+ 
+5) UPDATION OPERATION 
+ 
+SQL> UPDATE Emp30 
+2 SET Age = 27 
+3 WHERE emp_id = 101; 
+ 
+1 row updated. 
+SQL> SELECT * FROM Emp30; 
+EMP_ID NAME AGE 
+ 
+EMAIL_ID PHONE 
+ 
+101 Divya 27 
+divya3123@gmail.com 9723463728 
+ 
+102 Revathi 23 
+revathi54@gmail.com 8436737078 
+ 
+103 Malini 24 
+malini@gmail.com 6795327095 
+ 
+ 
+EMP_ID NAME AGE 
+ 
+EMAIL_ID PHONE 
+ 
+104 Varshini 22 
+varshini@gmail.com 9998887776 
+ 
+6) DELETION OPERATION 
+5  
+SQL> DELETE FROM Emp30 
+2 WHERE emp_id = 104; 
+DELETE FROM Emp30 
+* 
+ERROR at line 1: 
+ORA-02292: integrity constraint (SYSTEM.SYS_C008355) violated - child record 
+found 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
